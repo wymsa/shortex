@@ -1,0 +1,30 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+      PG_DATA: /data/postgres
+    ports:
+      - "${DATABASE_PORT}:5432"
+    networks:
+      - backend
+    volumes:
+      - postgres_volume:/data/postgres
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -d postgres']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  postgres_volume:
