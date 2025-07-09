@@ -1,7 +1,7 @@
+import { AppConfigModule } from '@/config/config.module';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 
 @Module({
-	imports: [ConfigModule.forRoot({ cache: true, isGlobal: true })]
+	imports: [AppConfigModule]
 })
 export class AppModule {}
